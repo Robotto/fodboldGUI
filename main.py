@@ -14,7 +14,7 @@ class mainWindow:
 
 
         self.total = 0
-        self.target = 1
+        self.target = 0
 
         # creating tkinter window
         self.root = Tk()
@@ -33,6 +33,9 @@ class mainWindow:
         print(self.fodboldtur)
         self.total = sum(self.fodboldtur.values())
         print(f"TOTAL: {self.total}")
+
+        for k in self.fodboldtur:
+            self.target += 4500
 
 
         #TEXT:
