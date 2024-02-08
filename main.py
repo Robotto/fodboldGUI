@@ -74,5 +74,27 @@ class mainWindow:
         outfile.close()
         print("GEMT")
 
+    def updateVelkomst(self):
+        self.total = 0
+        self.target = 0
+        try: #FILEN FINDES :)
+            infile = open(self.filename, 'rb')
+            self.fodboldtur = pickle.load(infile)
+            infile.close()
+        except: #FILEN FINDES IKKE.
+            ##TODO: open file??
+            ##TODONE: warn a brother
+            messagebox.showerror(parent=self.root, title="GWAAAAAAA", message="Kunne ikke opdatere!!")
+        print(self.fodboldtur)
+        self.total = sum(self.fodboldtur.values())
+        print(f"TOTAL: {self.total}")
+
+        for k in self.fodboldtur:
+            self.target += 4500
+
+        self.progressLabelText.set(f"Indsamlet: {self.total} af {self.target} kroner:")
+        print(f"Indsamlet: {self.total} af {self.target} kroner!")
+        self.progress['value'] = self.total / self.target * 100
+
 if __name__ == '__main__':
     main = mainWindow()

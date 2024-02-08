@@ -20,13 +20,13 @@ class payWindowClass:
         options = list(self.master.fodboldtur.keys())
             
         # datatype of menu text 
-        clicked = StringVar() 
+        self.clicked = StringVar() 
             
         # initial menu text 
-        clicked.set( "Medlem" ) 
+        self.clicked.set( "Medlem" ) 
             
         # Create Dropdown menu 
-        drop = OptionMenu( self.payWindow , clicked , *options ) 
+        drop = OptionMenu( self.payWindow , self.clicked , *options ) 
         drop.pack() 
 
 
@@ -39,21 +39,21 @@ class payWindowClass:
         self.button = Button(self.payWindow, text="betal", command= self.addMoney)
         self.button.pack()
 
-        selected = clicked.get
-
-    def addMoney(self, selected):
+        
+    def addMoney(self):
+        
         try:
             amount = abs(int(self.money.get())) #HUSK AT VALIDERE INPUT!, kun positive heltal!
         except:
             messagebox.showerror(parent=self.payWindow , title="Beløb fejl!", message="Prøv igen.\nKun hele tal!")
             return
-        # if (self.payWindow.clicked.get) == 'Medlem':
+        if self.clicked.get() == 'Medlem':
             messagebox.showerror(parent=self.payWindow, title="Vælg et Medlem", message="Du skal vælge et medlem\n før du kan indbetale")
-        # else:
-        self.master.fodboldtur.update({selected: (self.master.fodboldtur[selected] + amount)})
-        self.master.progressLabelText.set(f"Indsamlet: {self.master.total} af {self.master.target} kroner:")
-        print(f"Indsamlet: {self.master.total} af {self.master.target} kroner!")
-        self.master.progress['value'] = self.master.total / self.master.target * 100
-
+        else:
+            self.master.fodboldtur.update({self.clicked.get(): (self.master.fodboldtur[self.clicked.get()] + amount)})
             ##TODO: TELL MAIN WINDOW TO PICKLE THE DICTIONARY
-        self.master.gemFilen()
+            self.master.gemFilen()
+            self.master.updateVelkomst()
+
+            
+        
